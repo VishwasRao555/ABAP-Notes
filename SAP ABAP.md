@@ -136,9 +136,11 @@ A Foreign Key Relationship connects two tables by linking a Foreign Key field in
 ### Q13. What is a Structure in ABAP?
 
 A Structure is a DDIC object used to group multiple fields of different data types under a single name. It does not store data permanently in the database.
+Structures are used to Create a Global and Local Table Type and  Internal Table , Work Area ( Local ) .
 
 - It contains multiple fields with different data types.
 - It is used to organize and process related data.
+- Used for Creating Global and Local Table Type and  Internal Table , Work Area ( Local ) .
 - Created using the T-Code: SE11.
 
 ### Q14. What is a Table Type in ABAP?
@@ -153,9 +155,9 @@ Only used While Creating or Defining an "Internal Table" ( Local Object ) .
 
 ### Q15. Types of Table Types Or Internal Tables (SE11)
 
-**1. Standard Table:** A Standard Table stores records in sequential order and allows duplicate key entries or non-unique Keys. Data is accessed mainly using an index.
+**1. Standard Table:** A Standard Table stores records in sequential order and allows duplicate key entries or non-unique Keys. Data is accessed using index and keys but mainly using an index.
 
-**2. Sorted Table:** A Sorted Table automatically stores records in sorted order based on its key and supports unique or non-unique keys.
+**2. Sorted Table:** A Sorted Table automatically stores records in sorted order based on its key and supports unique or non-unique keys.We can Access Data or Records using Both Keys and Index .
 
 **3. Hashed Table:** A Hashed Table stores records using a hash algorithm and requires a unique key. Data is accessed using the key rather than an index.
 
