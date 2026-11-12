@@ -4,7 +4,7 @@
 ### Q1. What is DDIC (Data Dictionary)?
 
 **DDIC** is a central repository in SAP ABAP used to define and manage database objects such as tables, views, data elements, domains, structures and table types. And DDIC can be Accessed by 
-Using the Transaction Code ( T-Code ) - **SE11 .
+Using the Transaction Code ( T-Code ) - **SE11** .
 
 ### Q2. What is SE11?
 
