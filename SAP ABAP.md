@@ -1462,102 +1462,331 @@ I ask the user to reproduce the issue and check SU53 immediately afterward. If n
 
 [Back to contents](#contents)
 
-### Q140. What are enhancements, user exits, customer exits and BAdIs?
 
-Enhancements add custom logic to SAP standard processes without directly changing standard code. User exits are older application-specific options, customer exits are SAP-provided options (SMOD/CMOD), and BAdIs are object-oriented enhancements (SE18/SE19).
+### Q140. What are Enhancements in SAP ABAP?
 
-### Q141. What is a BAdI?
+Enhancements are mechanisms that allow us to extend or customize SAP standard functionality without directly modifying the original SAP standard code.
 
-A BAdI (Business Add-In) is an object-oriented enhancement option in SAP. It lets us add custom business logic without changing the original SAP code. For example, we can add a purchase order validation at a suitable BAdI.
+For example, adding custom validations while creating a purchase order or implementing additional business logic during sales order processing.
 
-### Q142. What is the difference between a BAdI definition and implementation?
+Enhancements improve maintainability and reduce upgrade-related issues.
 
-The BAdI definition describes the available methods and properties. The implementation contains the custom code that runs when the BAdI is called. We inspect the definition in SE18, then create, code and activate the implementation in SE19.
+### Q141. What are the different types of Enhancements in SAP ABAP?
 
-### Q143. What is a filter-dependent BAdI?
+The major enhancement techniques are:
 
-A filter-dependent BAdI selects implementations based on filter values. For example, a country filter can select different validation logic for India and Germany. We define matching filter conditions in the implementation.
+- **User Exits:** Traditional enhancement mechanisms, often implemented using subroutines.
+- **Customer Exits:** SAP-provided enhancement options implemented using SMOD and CMOD.
+- **BAdIs:** Object-oriented enhancement mechanisms implemented using classes and interfaces.
+- **Implicit Enhancements:** Enhancement options available at predefined locations in standard programs.
+- **Explicit Enhancements:** Enhancement options explicitly provided by SAP through enhancement points and sections.
 
-### Q144. What are implicit and explicit enhancements?
+### Q142. What is an Interface in SAP ABAP?
 
-Implicit enhancements are available at predefined locations, such as the beginning or end of certain procedures. Explicit enhancements are deliberately provided in the code through enhancement points or sections. I prefer supported, released extension options when they meet the requirement.
+An interface is a mechanism used to exchange data or communicate between SAP systems or between SAP and external systems.
 
-### Q145. How do you find and debug a BAdI?
+For example, transferring employee information from an external application into SAP or sending purchase order information from SAP to another system.
 
-I check the application documentation, enhancement definitions and relevant standard code for BAdI calls. Then I set a breakpoint in the implementation method and run the business process. If it does not stop, I check activation, filters and whether the application reaches that calling point.
+Common integration technologies include RFC, BAPI, IDoc, OData and Web Services.
 
-### Q146. What is the difference between RFC and BAPI?
+In Object-Oriented ABAP, an interface has a different meaning: it defines a contract that implementing classes must follow.
 
-RFC (Remote Function Call) allows us to call remote-enabled function modules. A BAPI (Business Application Programming Interface) provides a defined business operation, such as creating a document. Many BAPIs support RFC, but not every RFC is a BAPI; we follow the BAPI's commit and error-handling rules.
+### Q143. What are the different types of Interfaces in SAP?
 
-### Q147. What is RFC?
+Interfaces can be classified based on the direction and mode of communication.
 
-RFC (Remote Function Call) is SAP's mechanism for calling remote-enabled function modules. We use it to exchange data or execute functions between systems, or in a separate RFC context within the same system.
+**Based on direction:**
 
-### Q148. What is an RFC destination? What is SM59?
+- **Inbound Interface:** Receives data from an external system into SAP.
+- **Outbound Interface:** Sends data from SAP to an external system.
 
-An RFC destination defines how SAP connects to another system or service. We maintain connection settings and run connection tests in SM59. A successful connection test does not by itself confirm business authorizations.
+**Based on communication:**
 
-### Q149. What are the different types of RFC?
+- **Synchronous Interface:** The sender waits for a response.
+- **Asynchronous Interface:** The sender does not need to wait for immediate processing.
 
-RFC supports different ways of calling functions depending on timing and reliability.
+**Common interface technologies:**
 
-- **sRFC:** The caller waits for the response.
-- **aRFC:** The caller continues while the function runs separately.
-- **tRFC:** Stores transactional calls for reliable execution and retry.
-- **qRFC:** Adds queue-based ordering to transactional calls.
-- **bgRFC:** A newer background communication mechanism supporting transactional or queued processing.
+- RFC
+- BAPI
+- IDoc
+- OData
+- SOAP Web Services
+- REST APIs
+- File-based interfaces
+
+### Q144. What is the difference between Enhancements and Interfaces?
+
+| Enhancements | Interfaces |
+|---|---|
+| Extend existing SAP functionality. | Enable communication and data exchange between systems. |
+| Used to implement additional business logic. | Used to integrate applications. |
+| Usually executed within a business process. | Can operate within or across systems. |
+| Examples: BAdI, User Exit, Customer Exit. | Examples: RFC, BAPI, IDoc, OData. |
+
+For example, adding a custom purchase order validation is an enhancement, whereas transferring purchase order data to another system is an interface.
+
+### Q145. What is the difference between User Exit, Customer Exit and BAdI?
+
+| User Exit | Customer Exit | BAdI |
+|---|---|---|
+| Traditional enhancement technique. | SAP-provided enhancement technique. | Object-oriented enhancement technique. |
+| Often based on subroutines. | Supports function, screen and menu exits. | Based on classes and interfaces. |
+| Application-specific implementation. | Managed through enhancement projects. | Supports single or multiple implementations, depending on the definition. |
+| Common in older SAP applications. | Uses SMOD and CMOD. | Uses SE18 and SE19. |
+
+I prefer a suitable supported BAdI when available because it provides a structured object-oriented enhancement mechanism.
+
+### Q146. What is the difference between Implicit and Explicit Enhancements?
+
+| Implicit Enhancement | Explicit Enhancement |
+|---|---|
+| Available automatically at predefined locations. | Explicitly provided by the original developer. |
+| Commonly available at the beginning or end of methods, functions and subroutines. | Available at defined enhancement points or sections. |
+| Does not require an explicitly declared enhancement point. | Requires an explicitly declared enhancement option. |
+
+An enhancement point allows additional code to be inserted, whereas an enhancement section allows a defined section of code to be replaced through an enhancement implementation.
+
+### Q147. What is a BAdI?
+
+A BAdI (Business Add-In) is an object-oriented enhancement mechanism in SAP that allows us to implement custom business logic without directly modifying standard SAP code.
+
+BAdIs are based on ABAP Objects, interfaces and implementing classes.
+
+For example, we can use a suitable BAdI to validate purchase order data before saving.
+
+- **SE18:** BAdI Definition.
+- **SE19:** BAdI Implementation.
+
+### Q148. What are the different types of BAdIs?
+
+There are two major generations of BAdIs:
+
+- **Classic BAdI:** The traditional object-oriented enhancement mechanism.
+- **New BAdI:** A kernel-based enhancement mechanism integrated with the Enhancement Framework.
+
+BAdIs can also be classified based on their implementation behavior:
+
+- **Single-Use BAdI:** Allows only one applicable implementation at a time.
+- **Multiple-Use BAdI:** Allows multiple applicable implementations.
+- **Filter-Dependent BAdI:** Selects applicable implementations based on filter values.
+
+For example, a filter-dependent BAdI can execute different business logic based on the country or company code.
+
+### Q149. What is a BAdI Definition and BAdI Implementation? How do you implement a BAdI?
+
+A BAdI definition specifies the available methods, interface, filters and implementation properties.
+
+A BAdI implementation contains the actual custom business logic.
+
+**Implementation steps:**
+
+1. Identify the appropriate BAdI for the business requirement.
+2. Examine the BAdI definition using SE18.
+3. Create an implementation using SE19.
+4. Implement the required interface methods.
+5. Maintain filter values if applicable.
+6. Activate the implementation.
+7. Test and debug the business process.
+
+To debug a BAdI, I place a breakpoint inside the implementation method and execute the corresponding business transaction.
 
 ### Q150. What is a BAPI?
 
-A BAPI (Business Application Programming Interface) is a defined SAP business interface for operations such as creating a purchase order or reading customer details. Traditional BAPIs are implemented as RFC-enabled function modules. We use suitable supported BAPIs to work with business data through SAP's own logic.
+A BAPI (Business Application Programming Interface) is a standardized SAP business interface used to access or perform business operations.
 
-### Q151. What are some commonly used BAPIs?
+Traditional BAPIs are implemented as RFC-enabled function modules.
 
-Examples in classical SAP systems include `BAPI_PO_CREATE1` for purchase orders, `BAPI_SALESORDER_CREATEFROMDAT2` for sales orders and `BAPI_MATERIAL_SAVEDATA` for material data. I select the API based on the business requirement and confirm it is supported in the target system.
+They allow applications to work with SAP business data through defined business logic instead of directly modifying database tables.
 
-### Q152. What is BAPIRET2? Why do we check RETURN?
+**Examples:**
 
-BAPIRET2 is a standard structure used by many BAPIs to return messages. It contains fields such as TYPE, ID, NUMBER and MESSAGE. I check the return messages for errors or aborts, even if the function call itself completes successfully.
+- `BAPI_PO_CREATE1` - Create a purchase order.
+- `BAPI_SALESORDER_CREATEFROMDAT2` - Create a sales order.
+- `BAPI_MATERIAL_SAVEDATA` - Create or maintain material data.
 
-### Q153. Why do we use BAPI_TRANSACTION_COMMIT and BAPI_TRANSACTION_ROLLBACK?
+### Q151. What is the difference between BAPI and BAdI?
 
-Many change BAPIs leave the transaction open so the caller can decide whether to save. We call `BAPI_TRANSACTION_COMMIT` after successful processing or `BAPI_TRANSACTION_ROLLBACK` on failure, according to the BAPI documentation. For remote calls, transaction handling must use the same appropriate RFC context.
+| BAPI | BAdI |
+|---|---|
+| Business Application Programming Interface. | Business Add-In. |
+| Used to perform business operations. | Used to enhance existing business operations. |
+| Integration or business API mechanism. | Enhancement mechanism. |
+| Traditionally based on RFC-enabled function modules. | Based on object-oriented classes and interfaces. |
+| Called explicitly by a consuming application. | Executed when the application reaches its enhancement call. |
+| Example: Creating a purchase order. | Example: Validating a purchase order. |
 
-### Q154. How do you call a BAPI and handle errors?
+Simply put, a BAPI performs a business operation, whereas a BAdI customizes a business operation.
 
-I fill the required input structures and tables, call the BAPI and check its RETURN messages. If processing succeeds, I commit when required; otherwise, I roll back and report the errors.
+### Q152. What is RFC? Why do we use it?
+
+RFC (Remote Function Call) is a communication mechanism in SAP used to execute remote-enabled function modules across systems or in a separate RFC context within the same system.
+
+**Uses of RFC:**
+
+- Communication between SAP systems.
+- Integration between SAP and non-SAP systems.
+- Remote execution of function modules.
+- Exchange of business data.
+- Distributed and parallel processing.
+
+RFC destinations are configured and tested using transaction SM59.
+
+**Basic syntax:**
 
 ```abap
-" Example: after a change BAPI returns a BAPIRET2 table
+CALL FUNCTION 'Z_GET_EMPLOYEE'
+  DESTINATION 'Z_REMOTE_SYSTEM'
+  EXPORTING
+    iv_emp_id = lv_emp_id
+  IMPORTING
+    es_employee = ls_employee
+  EXCEPTIONS
+    communication_failure = 1
+    system_failure        = 2
+    OTHERS                = 3.
+```
+
+The function module must be configured as remote-enabled in the target system.
+
+### Q153. What are the different types of RFC?
+
+- **sRFC (Synchronous RFC):** The calling program waits until the remote function finishes and returns a response.
+
+- **aRFC (Asynchronous RFC):** The calling program continues execution while the remote function executes separately.
+
+- **tRFC (Transactional RFC):** Provides reliable transactional execution with retry support.
+
+- **qRFC (Queued RFC):** Extends transactional RFC by providing ordered execution through queues.
+
+- **bgRFC (Background RFC):** A newer mechanism for reliable background communication using transactional or queued processing.
+
+Important transaction codes:
+
+- `SM59` - RFC destination configuration.
+- `SM58` - Transactional RFC monitoring.
+- `SMQ1` - Outbound queue monitoring.
+- `SMQ2` - Inbound queue monitoring.
+- `SBGRFCMON` - Background RFC monitoring.
+
+### Q154. What is the difference between RFC and BAPI?
+
+| RFC | BAPI |
+|---|---|
+| Remote Function Call. | Business Application Programming Interface. |
+| Communication mechanism. | Standardized business interface. |
+| Executes remote-enabled function modules. | Performs defined business operations. |
+| Can be used for general-purpose remote processing. | Usually associated with SAP business objects and processes. |
+| Can be custom or standard. | Provides a defined business API contract. |
+
+Traditional BAPIs use RFC technology, but not every RFC-enabled function module is a BAPI.
+
+### Q155. Why do we use BAPI_TRANSACTION_COMMIT, BAPI_TRANSACTION_ROLLBACK and BAPIRET2?
+
+Many change BAPIs do not automatically commit database changes.
+
+- **BAPIRET2:** A standard structure used to return success, warning, information and error messages.
+- **BAPI_TRANSACTION_COMMIT:** Commits successful business changes when required.
+- **BAPI_TRANSACTION_ROLLBACK:** Rolls back uncommitted changes when processing fails.
+
+**Basic syntax:**
+
+```abap
 IF line_exists( lt_return[ type = 'E' ] ) OR
    line_exists( lt_return[ type = 'A' ] ) OR
    line_exists( lt_return[ type = 'X' ] ).
+
   CALL FUNCTION 'BAPI_TRANSACTION_ROLLBACK'.
+
 ELSE.
+
   CALL FUNCTION 'BAPI_TRANSACTION_COMMIT'
-    EXPORTING wait = abap_true
-    IMPORTING return = ls_commit_return.
+    EXPORTING
+      wait = abap_true.
+
 ENDIF.
 ```
 
-This is a local transaction-handling example, not a complete BAPI program. Check the actual BAPI requirements, commit response and any relevant warnings; use matching remote context for a remote transaction.
+I always check the BAPI return messages before committing and follow the transaction-handling rules of the specific BAPI.
 
-### Q155. What is the difference between a BAPI and a BAdI?
+For remote BAPI calls, commit or rollback must be performed in the appropriate RFC context.
 
-A BAPI lets us call a defined business operation, while a BAdI lets us extend an existing business operation. For example, a BAPI can create a purchase order, and a suitable BAdI can add a custom check during that process.
+### Q156. What is BDC? What are the different types of BDC?
 
-### Q156. What is an IDoc? What are ALE and EDI?
+BDC (Batch Data Communication) is a technique used to automate data entry into SAP by simulating user interactions with transaction screens.
 
-An IDoc (Intermediate Document) is a standard format for exchanging business data, often asynchronously. It contains control, data and status records. ALE distributes data between SAP systems, EDI exchanges documents between organizations, and WE02/WE05 show IDoc status.
+It is commonly used for legacy data migration and bulk data uploads.
 
-### Q157. What is BDC? How is it different from BAPI?
+There are two main BDC methods:
 
-BDC (Batch Data Communication) automates data entry through classical SAP screens, using session processing (SM35) or CALL TRANSACTION. A BAPI uses a business interface instead of screens, so I prefer a suitable supported BAPI when available.
+- **Session Method:** Creates a batch input session that can be processed later using SM35.
+- **Call Transaction Method:** Executes the transaction directly from the ABAP program using the prepared BDC data.
 
-### Q158. What is the difference between BDC session method and CALL TRANSACTION?
+Transaction SHDB is used to record transaction screen sequences and field information.
 
-The session method creates a batch-input session that can be processed and monitored in SM35. CALL TRANSACTION runs the transaction directly from ABAP and can collect messages immediately. Both depend on classical screen behavior.
+I prefer a supported business API or migration tool over BDC when one is available, because BDC depends on screen sequences.
+
+### Q157. What is CALL TRANSACTION? What is the difference between CALL TRANSACTION and LEAVE TO TRANSACTION?
+
+CALL TRANSACTION is an ABAP statement used to execute another SAP transaction from an ABAP program.
+
+It is commonly used for transaction navigation, drill-down reports and automated data entry through BDC.
+
+**Basic syntax:**
+
+```abap
+CALL TRANSACTION 'MM03'
+  WITH AUTHORITY-CHECK.
+```
+
+**BDC syntax:**
+
+```abap
+DATA: lt_bdcdata TYPE TABLE OF bdcdata,
+      lt_messages TYPE TABLE OF bdcmsgcoll.
+
+" Populate LT_BDCDATA before calling the transaction
+
+CALL TRANSACTION 'MM01'
+  WITH AUTHORITY-CHECK
+  USING lt_bdcdata
+  MODE 'N'
+  UPDATE 'S'
+  MESSAGES INTO lt_messages.
+```
+
+**Display modes:**
+
+- `A` - Display all screens.
+- `E` - Display screens when errors occur.
+- `N` - Execute without displaying screens.
+
+**Update modes:**
+
+- `S` - Synchronous update.
+- `A` - Asynchronous update.
+- `L` - Local update.
+
+**Difference:**
+
+| CALL TRANSACTION | LEAVE TO TRANSACTION |
+|---|---|
+| Calls another transaction. | Terminates the current program and starts another transaction. |
+| Control can return to the calling program. | Control does not return to the original program. |
+| Supports BDC processing using USING. | Does not support BDC processing using USING. |
+
+### Q158. What is the difference between BDC Session Method, Call Transaction Method and BAPI?
+
+| Session Method | Call Transaction Method | BAPI |
+|---|---|---|
+| Screen-based processing. | Screen-based processing. | Business-interface-based processing. |
+| Creates a batch input session. | Executes the transaction directly. | Calls a defined business API. |
+| Sessions are processed using SM35. | Processed through the ABAP program. | Processed through the BAPI function module. |
+| Built-in session logs and reprocessing. | Error handling must be implemented in the program. | Returns structured business messages. |
+| Suitable for scheduled batch input. | Suitable for immediate transaction processing. | Suitable for business integration. |
+| Depends on screen sequences. | Depends on screen sequences. | Independent of transaction screen sequences. |
+
+I prefer a suitable supported BAPI over BDC because it provides a defined business interface, structured error handling and less dependency on screen changes.
 
 ---
 
