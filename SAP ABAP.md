@@ -905,7 +905,42 @@ ENDIF.
 
 Create the objects once in PBO. The custom control CC_ALV and object references must already be defined.
 
-### Q84. How do you handle events in OO ALV?
+### Q84A. What is an Event Handler in OO ALV?
+An Event Handler is a method defined in a class that automatically executes when a registered event is triggered in the ALV Grid.
+
+It is used to handle user interactions such as double-clicking, clicking hotspots, modifying cell values and executing custom toolbar functions.
+
+### 84B.How do you implement Event Handling in OO ALV?
+There are five major steps:
+1. Define an event handler class.
+2. Declare a method using FOR EVENT ... OF.
+3. Implement the event handler method.
+4. Create an object of the handler class.
+5. Register the event using SET HANDLER.
+
+**Synatx:**
+
+```abap
+CLASS lcl_event_handler DEFINITION.
+  PUBLIC SECTION.
+    METHODS handle_double_click
+      FOR EVENT double_click OF cl_gui_alv_grid
+      IMPORTING e_row e_column.
+ENDCLASS.
+
+CLASS lcl_event_handler IMPLEMENTATION.
+  METHOD handle_double_click.
+    MESSAGE 'Double-click triggered' TYPE 'I'.
+  ENDMETHOD.
+ENDCLASS.
+
+DATA(lo_handler) = NEW lcl_event_handler( ).
+
+SET HANDLER lo_handler->handle_double_click
+    FOR lo_alv.
+```
+
+### Q84C. How do you handle events in OO ALV?
 
 OO ALV events let us respond to user actions like a double-click, a hotspot click or a data change. We define a handler method using `FOR EVENT`, implement its logic and register it using `SET HANDLER`. Classical ALV usually handles user commands through callback subroutines.
 
@@ -918,6 +953,29 @@ METHODS on_double_click
 ```
 
 Implement the handler method in a local or global class and register it after creating the grid and handler object. The grid calls the method automatically when the event occurs.
+
+### Q84D. What is the purpose of SET HANDLER?
+SET HANDLER registers an event handler method with an event-raising object.
+
+Whenever the registered object raises the corresponding event, the handler method is executed automatically.
+
+### 84E. What is the USER_COMMAND event?
+The USER_COMMAND event handles custom function codes triggered by user interactions with the ALV toolbar.
+
+The function code is received through the E_UCOMM parameter.
+
+**Synatx**
+```abap
+METHOD handle_user_command.
+  CASE e_ucomm.
+    WHEN 'SAVE'.
+      " Save logic
+    WHEN 'DELETE'.
+      " Delete logic
+  ENDCASE.
+ENDMETHOD.
+```
+
 
 ### Q85. What is OO ALV? How is it different from classical ALV?
 
